@@ -83,11 +83,11 @@ conda_init() {
 }
 conda() {
   conda_init
-  command conda "$@"
+  conda "$@"
 }
 mamba() {
   conda_init
-  command mamba "$@"
+  mamba "$@"
 }
 
 # set up NVM

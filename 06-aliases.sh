@@ -11,7 +11,7 @@ alias ~='cd ~'
 
 # Quick Edit Configurations
 alias vimrc='nvim ~/.config/nvim/'
-alias bashrc='nvim ~/.bashrc && source ~/.bashrc'
+alias bashrc='nvim ~/.bashrc.d/ && source ~/.bashrc'
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -34,7 +34,7 @@ alias where='which'
 alias nv='nvim'
 alias yy='yazi'
 alias lg='lazygit'
-alias rg='aichat'
+alias ag='aichat'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
