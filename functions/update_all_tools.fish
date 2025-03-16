@@ -67,10 +67,10 @@ function update_all_tools
     end
 
     # 定义工具列表和状态（使用局部变量而非全局变量）
-    set -g tools "Homebrew (brew)" "Rust 和 Cargo (rustup, cargo)" "asdf 和插件" "Fish shell" "Fisher 插件" "Conda 和包"
-    set -g tool_selected 0 0 0 0 0 0  # 0 表示未选中，1 表示选中
+    set -l tools "Homebrew (brew)" "Rust 和 Cargo (rustup, cargo)" "asdf 和插件" "Fish shell" "Fisher 插件" "Conda 和包"
+    set -l tool_selected 0 0 0 0 0 0  # 0 表示未选中，1 表示选中
 
-    function show_menu
+    function show_menu --no-scope-shadowing
         clear
         echo "MAC 命令行工具更新脚本"
         echo "========================================"
@@ -102,7 +102,6 @@ function update_all_tools
         switch $choice
             case q
                 echo "退出脚本"
-                set -e tools tool_selected
                 return 0  # 使用return而非exit
             case a
                 # 全选
