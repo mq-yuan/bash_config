@@ -12,6 +12,7 @@ alias ~='cd ~'
 # Quick Edit Configurations
 alias vimrc='nvim ~/.config/nvim/'
 alias bashrc='nvim ~/.bashrc.d/ && source ~/.bashrc'
+alias autowork='cd ~/Project/autowork && conda activate auto_work'
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then

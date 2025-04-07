@@ -1,5 +1,5 @@
 # load api key
-if [ -t "$HOME/.bashrc.d/.api_key" ]; then
+if [ -f "$HOME/.bashrc.d/.api_key" ]; then
   export $(grep -v '^#' "$HOME/.bashrc.d/.api_key" | xargs)
 fi
 
