@@ -1,3 +1,4 @@
+# ~/.config/fish/functions/update_all_tools.fish
 function update_all_tools
     # 定义内部函数
     function print_header
