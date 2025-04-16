@@ -1,7 +1,7 @@
 # ~/.config/fish/functions/clangd_config_copy.fish
-function clangd_config_copy --description 'Copies .clangd and .clang-format from ~/.config/clangd to the current working directory.'
+function clangd_config_copy --description 'Copies .clangd and .clang-format from $HOME/.config/clangd to the current working directory.'
   # Define the source directory where the .clangd and .clang-format files are stored.
-  set -l source_dir ~/.config/clangd
+  set -l source_dir $HOME/.config/clangd
 
   # Define the destination directory (current working directory).
   set -l dest_dir .

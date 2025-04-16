@@ -2,4 +2,5 @@
 abbr lg "lazygit"
 abbr yy "yazi"
 abbr ag "aichat"
-abbr fishrc "nvim ~/.config/fish && fish_reload"
+abbr fishrc "nvim $HOME/.config/fish && fish_reload"
+abbr scrpy "scripts_python"

@@ -1,1 +1,6 @@
 fish_variables
+
+# fisher plugins
+zoxide
+fzf
+spoonge

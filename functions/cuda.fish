@@ -48,6 +48,7 @@ function cuda --description 'Switch between CUDA versions'
         return 1
     end
 
+
     # 检查是否需要切换 GCC
     if test "$gcc_major" != "$selected_gcc_version"
         echo "当前 GCC $current_gcc_version 与目标版本 $selected_gcc_version 不匹配，尝试切换"
@@ -81,13 +82,39 @@ function cuda --description 'Switch between CUDA versions'
     end
     set -gx LD_LIBRARY_PATH $new_ld_path
 
+
     # 设置新的 CUDA 环境变量
     set -gx CUDA_HOME "$cuda_dir"
     set -gx PATH "$cuda_dir/bin" $PATH
-    if test -d "$cuda_dir/lib64"
-        set -gx LD_LIBRARY_PATH "$cuda_dir/lib64" $LD_LIBRARY_PATH
-    else if test -d "$cuda_dir/lib"
+    if test -d "$cuda_dir/lib"
         set -gx LD_LIBRARY_PATH "$cuda_dir/lib" $LD_LIBRARY_PATH
+    else if test -d "$cuda_dir/lib64"
+        set -gx LD_LIBRARY_PATH "$cuda_dir/lib64" $LD_LIBRARY_PATH
+    end
+
+    # 设置新的 CUDNN 环境变量
+    # 动态选择 cuDNN 版本
+    set cudnn_dirs (ls -d $cuda_base_dir/cudnn-*_cuda-$target_version 2>/dev/null | sort -V)
+    if test (count $cudnn_dirs) -eq 0
+        echo "警告: 未找到任何 cuDNN 版本 for CUDA $target_version"
+        echo "请安装 cuDNN 到路径如: $cuda_base_dir/cudnn-8.9.7_cuda-$target_version"
+        echo "推荐版本: CUDA 11.8 使用 cuDNN 8.9.x，CUDA 12.x 使用 cuDNN 9.0.x"
+    else
+        echo "找到以下 cuDNN 版本 for CUDA $target_version："
+        for dir in $cudnn_dirs
+            set cudnn_version (basename $dir | string replace -r 'cudnn-(.*)_cuda-.*' '$1')
+            echo "  - $cudnn_version ($dir)"
+        end
+        set cudnn_dir $cudnn_dirs[-1]
+        set cudnn_version (basename $cudnn_dir | string replace -r 'cudnn-(.*)_cuda-.*' '$1')
+
+        echo "选择最新 cuDNN 版本: $cudnn_version，路径: $cudnn_dir"
+        if test -d "$cudnn_dir/lib"
+            set -gx LD_LIBRARY_PATH "$cudnn_dir/lib" $LD_LIBRARY_PATH
+        else if test -d "$cudnn_dir/lib64"
+            set -gx LD_LIBRARY_PATH "$cudnn_dir/lib64" $LD_LIBRARY_PATH
+        end
+        set -gx CPATH "$cudnn_dir/include" $CPATH
     end
 
     # 验证切换是否成功并记录日志
