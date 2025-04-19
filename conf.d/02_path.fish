@@ -5,4 +5,5 @@ if test $os = "Linux"
 else if test $os = "Darwin"
     fish_add_path /opt/homebrew/bin
 end
+fish_add_path $HOME/bin
 fish_add_path $HOME/.local/bin
