@@ -94,13 +94,13 @@ function cuda --description 'Switch between CUDA versions'
 
     # 设置新的 CUDNN 环境变量
     # 动态选择 cuDNN 版本
-    set cudnn_dirs (ls -d $cuda_base_dir/cudnn-*_cuda-$target_version 2>/dev/null | sort -V)
+    set cudnn_dirs (ls -d $cuda_base_dir/cudnn-*_cuda-$cuda_major 2>/dev/null | sort -V)
     if test (count $cudnn_dirs) -eq 0
-        echo "警告: 未找到任何 cuDNN 版本 for CUDA $target_version"
-        echo "请安装 cuDNN 到路径如: $cuda_base_dir/cudnn-8.9.7_cuda-$target_version"
-        echo "推荐版本: CUDA 11.8 使用 cuDNN 8.9.x，CUDA 12.x 使用 cuDNN 9.0.x"
+        echo "警告: 未找到任何 cuDNN 版本 for CUDA $cuda_major"
+        echo "请安装 cuDNN 到路径如: $cuda_base_dir/cudnn-8.9.7_cuda-$cuda_major"
+        echo "推荐版本: CUDA 11.* 使用 cuDNN 8.9.7，CUDA 12.* 使用 cuDNN 9.8.0"
     else
-        echo "找到以下 cuDNN 版本 for CUDA $target_version："
+        echo "找到以下 cuDNN 版本 for CUDA $cuda_major："
         for dir in $cudnn_dirs
             set cudnn_version (basename $dir | string replace -r 'cudnn-(.*)_cuda-.*' '$1')
             echo "  - $cudnn_version ($dir)"
