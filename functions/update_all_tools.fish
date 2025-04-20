@@ -161,25 +161,38 @@ function update_all_tools
                 for i in (seq (count $tools))
                     if test $tool_selected[$i] -eq 1
                         set has_selection 1
-                        switch $i
-                            case 1
-                                update_apt
-                            case 2
-                                update_flatpak
-                            case 3
-                                update_snap
-                            case 4
-                                update_homebrew
-                            case 5
-                                update_rust
-                            case 6
-                                update_asdf
-                            case 7
-                                update_fish
-                            case 8
-                                update_fisher
-                            case 9
-                                update_conda
+                        if test $os = "Darwin"
+                            switch $i
+                                case 1
+                                    update_homebrew
+                                case 2
+                                    update_rust
+                                case 3
+                                    update_asdf
+                                case 4
+                                    update_fisher
+                                case 5
+                                    update_conda
+                            end
+                        else if test $os = "Linux"
+                            switch $i
+                                case 1
+                                    update_apt
+                                case 2
+                                    update_flatpak
+                                case 3
+                                    update_snap
+                                case 4
+                                    update_homebrew
+                                case 5
+                                    update_rust
+                                case 6
+                                    update_asdf
+                                case 7
+                                    update_fisher
+                                case 8
+                                    update_conda
+                            end
                         end
                     end
                 end
