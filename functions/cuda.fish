@@ -66,13 +66,13 @@ function cuda --description 'Switch between CUDA versions'
     end
 
     # 重置与 CUDA 相关的环境变量
-    set -l new_path
+    set new_path
     for p in $PATH
         if not string match -q "$cuda_base_dir/cuda-*" $p
             set new_path $new_path $p
         end
     end
-    set -gx PATH $new_path
+    set --global --export PATH $new_path
 
     set -l new_ld_path
     for p in $LD_LIBRARY_PATH
@@ -80,16 +80,16 @@ function cuda --description 'Switch between CUDA versions'
             set new_ld_path $new_ld_path $p
         end
     end
-    set -gx LD_LIBRARY_PATH $new_ld_path
+    set --global --export LD_LIBRARY_PATH $new_ld_path
 
 
     # 设置新的 CUDA 环境变量
-    set -gx CUDA_HOME "$cuda_dir"
-    set -gx PATH "$cuda_dir/bin" $PATH
+    set --global --export CUDA_HOME "$cuda_dir"
+    set --global --export PATH "$cuda_dir/bin" $PATH
     if test -d "$cuda_dir/lib"
-        set -gx LD_LIBRARY_PATH "$cuda_dir/lib" $LD_LIBRARY_PATH
+        set --global --export LD_LIBRARY_PATH "$cuda_dir/lib" $LD_LIBRARY_PATH
     else if test -d "$cuda_dir/lib64"
-        set -gx LD_LIBRARY_PATH "$cuda_dir/lib64" $LD_LIBRARY_PATH
+        set --global --export LD_LIBRARY_PATH "$cuda_dir/lib64" $LD_LIBRARY_PATH
     end
 
     # 设置新的 CUDNN 环境变量
@@ -110,11 +110,11 @@ function cuda --description 'Switch between CUDA versions'
 
         echo "选择最新 cuDNN 版本: $cudnn_version，路径: $cudnn_dir"
         if test -d "$cudnn_dir/lib"
-            set -gx LD_LIBRARY_PATH "$cudnn_dir/lib" $LD_LIBRARY_PATH
+            set --global --export LD_LIBRARY_PATH "$cudnn_dir/lib" $LD_LIBRARY_PATH
         else if test -d "$cudnn_dir/lib64"
-            set -gx LD_LIBRARY_PATH "$cudnn_dir/lib64" $LD_LIBRARY_PATH
+            set --global --export LD_LIBRARY_PATH "$cudnn_dir/lib64" $LD_LIBRARY_PATH
         end
-        set -gx CPATH "$cudnn_dir/include" $CPATH
+        set --global --export CPATH "$cudnn_dir/include" $CPATH
     end
 
     # 验证切换是否成功并记录日志

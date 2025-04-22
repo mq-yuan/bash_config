@@ -1,5 +1,5 @@
 # ~/.config/fish/conf.d/02-path.fish
-set -l os (uname)
+set --local os (uname)
 if test $os = "Linux"
     fish_add_path /home/linuxbrew/.linuxbrew/bin/
 else if test $os = "Darwin"
