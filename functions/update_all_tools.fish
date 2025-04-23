@@ -8,7 +8,6 @@ function update_all_tools
     # 日志辅助函数：包装命令并记录输出
     function log_command
         set -l cmd $argv[1]
-        set -l log_file $argv[2]
         echo "Running: $cmd" >> $UPDATE_LOG_FILE
         fish -c "$cmd" 2>&1 | tee -a $UPDATE_LOG_FILE
     end
